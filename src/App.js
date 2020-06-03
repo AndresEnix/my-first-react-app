@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
-import './App.css';
+
+import classes from './App.module.css'
+
 import Person from './Person/Person'
 
 const App = () => {
-  const style = {
-    backgroundColor: 'white',
-    font: 'inherit',
-    boder: '1px solid blue',
-    padding: '8px',
-    cursor: 'pointer'
-  };
   const [personsState, setPersonsState] = useState(
     {
       persons: [
@@ -39,29 +34,43 @@ const App = () => {
     setPersonsState({ persons: persons });
   }
 
-  console.log(personsState, showPersons)
-  return (
-    <div className="App">
-      <h1>Hi, I'm a react developer</h1>
-      <p>This is working</p>
-      <button
-        style={style}
-        onClick={() => setShowPersons(!showPersons)}>Switch Name</button>
-      {
-        showPersons ?
-          (<div>
-            {personsState.persons.map((person, index) => {
-              return <Person
-                click={() => deletePersonHandler(index)}
-                name={person.name}
-                age={person.age}
-                key={person.id}
-                changed={(event) => nameChangeHandler(event, person.id)}>
-                My Hobbies: Videogames
+  let persons = null;
+  let btnClasses = [classes.Button]
+  if (showPersons) {
+    persons = (
+      <div>
+        {personsState.persons.map((person, index) => {
+          return <Person
+            click={() => deletePersonHandler(index)}
+            name={person.name}
+            age={person.age}
+            key={person.id}
+            changed={(event) => nameChangeHandler(event, person.id)}>
+            My Hobbies: Videogames
               </Person>
-            })}
-          </div>) : (null)
-      }
+        })}
+      </div>
+    );
+    btnClasses.push(classes.Red)
+  }
+
+  const assignedClassesClasses = []
+  if (personsState.persons.length <= 2) {
+    assignedClassesClasses.push(classes.red)
+  }
+  if (personsState.persons.length <= 1) {
+    assignedClassesClasses.push(classes.Bold)
+  }
+
+  return (
+    <div className={classes.App}>
+      <h1>Hi, I'm a react developer</h1>
+      <p className={assignedClassesClasses.join(' ')}>This is really working!</p>
+      <button
+        className={btnClasses.join(' ')}
+        onClick={() => setShowPersons(!showPersons)}>{showPersons ? "Hide Persons" : "Show Persons"}
+      </button>
+      {persons}
     </div>
   );
 }
