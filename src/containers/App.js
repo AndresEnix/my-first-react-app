@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import classes from './App.module.css'
 
@@ -6,6 +6,12 @@ import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
 
 const App = (props) => {
+  useEffect(() => {
+    console.log('[App.js] Performing side effect')
+    return () => console.log('[App.js] Cleaning up previous side effect')
+  })
+  const [showCockpit, setShowCockpit] = useState(true)
+  const [showPersons, setShowPersons] = useState(false)
   const [personsState, setPersonsState] = useState(
     {
       persons: [
@@ -15,8 +21,6 @@ const App = (props) => {
       ]
     }
   )
-
-  const [showPersons, setShowPersons] = useState({ showPersons: true })
 
   const deletePersonHandler = (personIndex) => {
     const persons = [...personsState.persons];
@@ -35,6 +39,10 @@ const App = (props) => {
     setPersonsState({ persons: persons });
   }
 
+  const removeCockpit = () => {
+    setShowCockpit(false)
+  }
+
   const togglePersonsHandler = () => {
     setShowPersons(!showPersons)
   }
@@ -51,13 +59,23 @@ const App = (props) => {
     );
   }
 
+  let cockpit = null;
+  if (showCockpit) {
+    cockpit = (
+      <div>
+        <Cockpit
+          appTitle={props.appTitle}
+          showPersons={showPersons}
+          persons={personsState.persons}
+          clicked={togglePersonsHandler} />
+      </div>
+    );
+  }
+
   return (
     <div className={classes.App}>
-      <Cockpit
-        appTitle={props.appTitle}
-        showPersons={showPersons}
-        persons={personsState.persons}
-        clicked={togglePersonsHandler} />
+      <button onClick={removeCockpit}>Remove Cockpit</button>
+      {cockpit}
       {persons}
     </div>
   );
