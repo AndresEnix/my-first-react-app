@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 import classes from './App.module.css'
 
-import Person from './Person/Person'
+import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit'
 
-const App = () => {
+const App = (props) => {
   const [personsState, setPersonsState] = useState(
     {
       persons: [
@@ -34,42 +35,29 @@ const App = () => {
     setPersonsState({ persons: persons });
   }
 
+  const togglePersonsHandler = () => {
+    setShowPersons(!showPersons)
+  }
+
   let persons = null;
-  let btnClasses = [classes.Button]
   if (showPersons) {
     persons = (
       <div>
-        {personsState.persons.map((person, index) => {
-          return <Person
-            click={() => deletePersonHandler(index)}
-            name={person.name}
-            age={person.age}
-            key={person.id}
-            changed={(event) => nameChangeHandler(event, person.id)}>
-            My Hobbies: Videogames
-              </Person>
-        })}
+        <Persons
+          persons={personsState.persons}
+          clicked={deletePersonHandler}
+          changed={nameChangeHandler} />
       </div>
     );
-    btnClasses.push(classes.Red)
-  }
-
-  const assignedClassesClasses = []
-  if (personsState.persons.length <= 2) {
-    assignedClassesClasses.push(classes.red)
-  }
-  if (personsState.persons.length <= 1) {
-    assignedClassesClasses.push(classes.Bold)
   }
 
   return (
     <div className={classes.App}>
-      <h1>Hi, I'm a react developer</h1>
-      <p className={assignedClassesClasses.join(' ')}>This is really working!</p>
-      <button
-        className={btnClasses.join(' ')}
-        onClick={() => setShowPersons(!showPersons)}>{showPersons ? "Hide Persons" : "Show Persons"}
-      </button>
+      <Cockpit
+        appTitle={props.appTitle}
+        showPersons={showPersons}
+        persons={personsState.persons}
+        clicked={togglePersonsHandler} />
       {persons}
     </div>
   );
