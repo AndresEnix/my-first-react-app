@@ -4,6 +4,7 @@ import classes from './App.module.css'
 
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
+import WithClass from '../hoc/WithClass'
 
 const App = (props) => {
   useEffect(() => {
@@ -12,31 +13,29 @@ const App = (props) => {
   })
   const [showCockpit, setShowCockpit] = useState(true)
   const [showPersons, setShowPersons] = useState(false)
-  const [personsState, setPersonsState] = useState(
-    {
-      persons: [
-        { id: '101', name: "Andres", age: "29" },
-        { id: '102', name: "Camila", age: "25" },
-        { id: '103', name: "Juan", age: "6" }
-      ]
-    }
+  const [persons, setPersons] = useState(
+    [
+      { id: '101', name: "Andres", age: "29", hobbies: 'video games' },
+      { id: '102', name: "Camila", age: "25", hobbies: 'cooking'},
+      { id: '103', name: "Juan", age: "6", hobbies: 'watch tv' }
+    ]
   )
 
   const deletePersonHandler = (personIndex) => {
-    const persons = [...personsState.persons];
-    persons.splice(personIndex, 1);
-    setPersonsState({ persons: persons });
+    const tempPersons = [...persons];
+    tempPersons.splice(personIndex, 1);
+    setPersons(tempPersons);
   }
 
   const nameChangeHandler = (event, id) => {
-    const personIndex = personsState.persons.findIndex((p) => {
+    const personIndex = persons.findIndex((p) => {
       return p.id === id
     });
-    const person = { ...personsState.persons[personIndex] };
-    person.name = event.target.value;
-    const persons = [...personsState.persons];
-    persons[personIndex] = person;
-    setPersonsState({ persons: persons });
+    const tempPerson = { ...persons[personIndex] };
+    tempPerson.name = event.target.value;
+    const tempPersons = [...persons];
+    tempPersons[personIndex] = tempPerson;
+    setPersons(tempPersons);
   }
 
   const removeCockpit = () => {
@@ -47,37 +46,37 @@ const App = (props) => {
     setShowPersons(!showPersons)
   }
 
-  let persons = null;
+  let divPersons = null;
   if (showPersons) {
-    persons = (
+    divPersons = (
       <div>
         <Persons
-          persons={personsState.persons}
+          persons={persons}
           clicked={deletePersonHandler}
           changed={nameChangeHandler} />
       </div>
     );
   }
 
-  let cockpit = null;
+  let divCockpit = null;
   if (showCockpit) {
-    cockpit = (
+    divCockpit = (
       <div>
         <Cockpit
           appTitle={props.appTitle}
           showPersons={showPersons}
-          persons={personsState.persons}
+          persons={persons}
           clicked={togglePersonsHandler} />
       </div>
     );
   }
 
   return (
-    <div className={classes.App}>
+    <WithClass classes={classes.App}>
       <button onClick={removeCockpit}>Remove Cockpit</button>
-      {cockpit}
-      {persons}
-    </div>
+      {divCockpit}
+      {divPersons}
+    </WithClass>
   );
 }
 

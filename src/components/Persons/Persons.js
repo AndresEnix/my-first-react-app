@@ -15,7 +15,7 @@ const Persons = (props) => {
                 age={person.age}
                 key={person.id}
                 changed={(event) => props.changed(event, person.id)}>
-                My Hobbies: Videogames
+                my hobbies: {person.hobbies}
             </Person>
         })
     );
