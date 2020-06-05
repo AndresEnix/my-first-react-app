@@ -15,9 +15,9 @@ const App = (props) => {
   const [showPersons, setShowPersons] = useState(false)
   const [persons, setPersons] = useState(
     [
-      { id: '101', name: "Andres", age: "29", hobbies: 'video games' },
-      { id: '102', name: "Camila", age: "25", hobbies: 'cooking'},
-      { id: '103', name: "Juan", age: "6", hobbies: 'watch tv' }
+      { id: '101', name: "Andres", age: 29, hobbies: 'video games' },
+      { id: '102', name: "Camila", age: 25, hobbies: 'cooking'},
+      { id: '103', name: "Juan", age: 6, hobbies: 'watch tv' }
     ]
   )
 

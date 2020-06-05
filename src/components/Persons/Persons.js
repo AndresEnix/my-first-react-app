@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types'
 
 import Person from './Person/Person'
 
@@ -20,5 +21,11 @@ const Persons = (props) => {
         })
     );
 }
+
+Person.propTypes = {
+    persons: PropTypes.array,
+    clicked: PropTypes.func,
+    changed: PropTypes.func,
+};
 
 export default Persons;
