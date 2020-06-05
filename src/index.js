@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
+import AuthContextProvider from './context/AuthContext'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App appTitle="Persons Manager"/>
+    <AuthContextProvider>
+      <App appTitle="Persons Manager" />
+    </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
