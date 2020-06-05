@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 
 import classes from './App.module.css'
 
@@ -66,7 +66,7 @@ const App = (props) => {
 
   let divCockpit = null;
   if (showCockpit) {
-    divCockpit = (
+    divCockpit = useMemo(
       <div>
         <Cockpit
           appTitle={props.appTitle}
