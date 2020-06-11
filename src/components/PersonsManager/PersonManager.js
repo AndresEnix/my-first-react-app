@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-import classes from './App.module.css'
+import classes from './PersonManager.module.css'
 
-import Persons from '../components/Persons/Persons'
-import Cockpit from '../components/Cockpit/Cockpit'
-import WithClass from '../hoc/WithClass'
-import { AuthContext } from '../context/AuthContext'
+import Persons from './Persons/Persons'
+import Cockpit from './Cockpit/Cockpit'
+import WithClass from './WithClass/WithClass'
+import { AuthContext } from '../../context/AuthContext/AuthContext'
 
-const App = (props) => {
+const PersonManager = (props) => {
   useEffect(() => {
-    console.log('[App.js] Performing side effect')
-    return () => console.log('[App.js] Cleaning up previous side effect')
+    console.log('[PersonManager.js] Performing side effect')
+    return () => console.log('[PersonManager.js] Cleaning up previous side effect')
   })
   const authContext = useContext(AuthContext);
   const [showCockpit, setShowCockpit] = useState(true)
@@ -66,20 +66,20 @@ const App = (props) => {
 
   let divCockpit = null;
   if (showCockpit) {
-    divCockpit = useMemo(
+    divCockpit = (
       <div>
         <Cockpit
           appTitle={props.appTitle}
           showPersons={showPersons}
           persons={persons}
           clicked={togglePersonsHandler}
-          login={loginHandler}/>
+          login={loginHandler} />
       </div>
-    );
+    )
   }
 
   return (
-    <WithClass classes={classes.App}>
+    <WithClass classes={classes.PersonManager}>
       <button onClick={removeCockpit}>Remove Cockpit</button>
       {divCockpit}
       {divPersons}
@@ -87,4 +87,4 @@ const App = (props) => {
   );
 }
 
-export default App;
+export default PersonManager;
