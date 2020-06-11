@@ -4,7 +4,7 @@ import classes from './PersonManager.module.css'
 
 import Persons from './Persons/Persons'
 import Cockpit from './Cockpit/Cockpit'
-import WithClass from './WithClass/WithClass'
+import WithClass from '../../hoc/WithClass/WithClass'
 import { AuthContext } from '../../context/AuthContext/AuthContext'
 
 const PersonManager = (props) => {

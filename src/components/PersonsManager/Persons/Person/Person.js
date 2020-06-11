@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types'
 
 import classes from './Person.module.css'
-import Aux from '../../Aux/Aux'
-import WithLogic from '../../WithLogic/WithLogic'
+import Aux from '../../../../hoc/Aux/Aux'
+import WithLogic from '../../../../hoc/WithLogic/WithLogic'
 import { AuthContext } from '../../../../context/AuthContext/AuthContext'
 
 const Person = (props) => {
