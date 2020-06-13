@@ -69,7 +69,7 @@ const PersonManager = (props) => {
     divCockpit = (
       <div>
         <Cockpit
-          appTitle={props.appTitle}
+          moduleTitle={props.moduleTitle}
           showPersons={showPersons}
           persons={persons}
           clicked={togglePersonsHandler}

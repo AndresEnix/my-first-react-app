@@ -22,7 +22,7 @@ const Cockpit = (props) => {
 
     return (
         <div className={classes.Cockpit}>
-            <h1>{props.appTitle}</h1>
+            <h1>{props.moduleTitle}</h1>
             <p className={assignedClasses.join(' ')}>This is really working!</p>
             <button className={btnClasses} onClick={props.clicked}>{props.showPersons ? "Hide Persons" : "Show Persons"}</button>
             <button onClick={props.login}>Log in</button>
