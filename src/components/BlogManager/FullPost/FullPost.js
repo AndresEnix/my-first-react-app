@@ -18,7 +18,6 @@ const FullPost = (props) => {
             setResolved(false)
             axios.get(`https://jsonplaceholder.typicode.com/posts/${postParam}`)
                 .then(response => {
-                    console.log('FullPost',postParam,response.data)
                     setResolved(true)
                     setSelectedPost(response.data)
                     setError(false)
