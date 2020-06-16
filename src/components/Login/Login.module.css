@@ -1,0 +1,31 @@
+.Login {
+    text-align: center;
+}
+
+.Login div {
+    margin: 10px;
+}
+
+.Login button {
+    background-color: green;
+    color: white;
+    font: inherit;
+    border: 1px solid blue;
+    padding: 8px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.Login button:hover {
+    background-color: lightGreen;
+    color: black;
+}
+
+.Login button.Red {
+    background-color: red;
+}
+
+.Login button.Red:hover {
+    background-color: salmon;
+    color: black;
+}

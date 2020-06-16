@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
+import { AuthContext } from '../../../context/AuthContext/AuthContext'
 import axios from '../../../config/backend/jsonplaceholder';
 import Post from './Post/Post'
 
@@ -9,9 +11,10 @@ const Posts = (props) => {
     const [posts, setPost] = useState([]);
     const [resolved, setResolved] = useState(false);
     const [error, setError] = useState(false);
+    const authContext = useContext(AuthContext);
 
     useEffect(() => {
-        if (props.userId) {
+        if (authContext.isAuth && props.userId) {
             console.log('[Posts.js] Sending HTTP request to get the posts for the user with id:', props.userId)
             setResolved(false);
             axios.get(`/posts?userId=${props.userId}`)
@@ -26,36 +29,35 @@ const Posts = (props) => {
                 });
         }
         return () => console.log('[Posts.js] Cleaning up post for user with id: ', props.userId)
-    }, [props.userId]);
-    if (resolved) {
-        if (props.userId) {
-            if (error) {
-                return <p>Unable to get the posts created by {props.userName}</p>
-            }
-            if (!posts || posts.length <= 0) {
-                return <p>{props.userName} has not created any post yet</p>
-            }
-        }
+    }, [authContext.isAuth, props.userId]);
+    if (!authContext.isAuth) {
+        return <p>Please log in to see the posts</p>
+    } else if (!resolved && props.userId) {
+        return <p>Loading posts created by {props.userName}</p>
+    } else if (!resolved && !props.userId) {
+        return <p>Please specify the user</p>
+    } else if (resolved && error) {
+        return <p>Unable to load the posts from {props.userName}</p>
+    } else if (resolved && !error) {
+        return (
+            posts.map((post) => {
+                return (
+                    <Link exact="true" to={'/post/' + post.id} key={post.id}>
+                        <Post
+                            title={post.title}
+                            author={props.userName} />
+                    </Link>
+                )
+            })
+        );
     } else {
-        if (props.userId) {
-            return <p>Loading posts created by {props.userName} ...</p>
-        } else {
-            return <p>Please log in to see the posts</p>
-        }
+        return null;
     }
-    return (
-        posts.map((post) => {
-            return <Post
-                title={post.title}
-                author={props.userName}
-                key={post.id}
-                clicked={() => props.clicked(post.id)} />
-        })
-    );
+
 }
 
 Posts.propTypes = {
-    userId: PropTypes.number
+    userId: PropTypes.string
 };
 
 export default Posts;

@@ -1,18 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import classes from './PersonManager.module.css'
 
 import Persons from './Persons/Persons'
 import Cockpit from './Cockpit/Cockpit'
 import WithClass from '../../hoc/WithClass/WithClass'
-import { AuthContext } from '../../context/AuthContext/AuthContext'
 
 const PersonManager = (props) => {
   useEffect(() => {
     console.log('[PersonManager.js] Performing side effect')
     return () => console.log('[PersonManager.js] Cleaning up previous side effect')
   })
-  const authContext = useContext(AuthContext);
   const [showCockpit, setShowCockpit] = useState(true)
   const [showPersons, setShowPersons] = useState(false)
   const [persons, setPersons] = useState(
@@ -48,10 +46,6 @@ const PersonManager = (props) => {
     setShowPersons(!showPersons)
   }
 
-  const loginHandler = () => {
-    authContext.login()
-  }
-
   let divPersons = null;
   if (showPersons) {
     divPersons = (
@@ -72,8 +66,7 @@ const PersonManager = (props) => {
           moduleTitle={props.moduleTitle}
           showPersons={showPersons}
           persons={persons}
-          clicked={togglePersonsHandler}
-          login={loginHandler} />
+          clicked={togglePersonsHandler} />
       </div>
     )
   }
