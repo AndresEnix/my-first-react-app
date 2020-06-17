@@ -20,15 +20,16 @@ const Login = (props) => {
 
     return (
         <WithClass classes={classes.Login}>
+            {!authContext.isAuth ?
+                <div>
+                    <label>User: </label>
+                    <select name="User" id="user" ref={selectedUser} onChange={userChangeHandler} options={options}>
+                        {options}
+                    </select>
+                </div> : null}
             <div>
-                <label>User: </label>
-                <select name="User" id="user" ref={selectedUser} onChange={userChangeHandler} options={options}>
-                    {options}
-                </select>
-            </div>
-            <div>
-                <button onClick={() => { authContext.login(userId) }}>Log in</button>
-                <button onClick={() => { authContext.login(null) }} className={classes.Red}>Log out</button>
+                {!authContext.isAuth ? <button onClick={() => { authContext.login(userId) }}>Log in</button> : null}
+                {authContext.isAuth ? <button onClick={() => { authContext.login(null) }} className={classes.Red}>Log out</button> : null}
             </div>
         </WithClass>
     )
